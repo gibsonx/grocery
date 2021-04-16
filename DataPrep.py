@@ -1,4 +1,4 @@
-from .aux_func import remove_emoji
+from aux_func import remove_emoji
 import os
 import re
 import string
