@@ -7,10 +7,11 @@ from zhon import hanzi
 
 class DataPrep:
     def __init__(self, base_dir, dataset_name):
+        self.base_dir = base_dir
         self.dataset_name = dataset_name
-        self.dir = base_dir + dataset_name
+        self.dir = self.base_dir + dataset_name
 
-    def preprocess_tweet_text(tweet):
+    def preprocess_tweet_text(self,tweet):
         tweet = tweet.lower()
         # Remove urls
         tweet = re.sub(r"^#\S+|\s#\S+", '', tweet, flags=re.MULTILINE)
@@ -27,8 +28,9 @@ class DataPrep:
         pd_list = []
         with open(text, 'r') as f:
             for tweet in f.read().splitlines():
-                tweet = self.preprocess_tweet_text(tweet)
-                pd_list.append(tweet)
+              print(tweet)
+              tweet = self.preprocess_tweet_text(tweet)
+              pd_list.append(tweet)
         return pd_list
 
     def readfile_label(self,text):
