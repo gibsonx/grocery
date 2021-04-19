@@ -129,3 +129,9 @@ def get_tokenization(tweets, tokenizer, max_len=120):
     ids = np.array([a['attention_mask'] for a in inps])
     return inp_tok, ids
 
+def warmup(epoch, lr):
+    """
+    Used to reduce the learning rate after a certain number of times, which tends to achieve better convergence.
+    """
+    return max(lr +1e-6, 2e-5)
+
