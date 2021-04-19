@@ -1,24 +1,10 @@
 import re
-import pandas as pd
 import os,string
 import pandas as pd
-from zhon import hanzi
-import itertools
-import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 import tensorflow as tf
-from tensorflow.keras import Input, layers, losses, preprocessing, utils
-from tensorflow.keras.callbacks import ModelCheckpoint
-from tensorflow.keras.models import Model
-from tensorflow.keras.optimizers import Adam
-from keras.layers.core import Dense
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score,confusion_matrix
 from zhon import hanzi
-from sklearn.metrics import accuracy_score, roc_auc_score, roc_curve
-import csv
-from focal_loss import BinaryFocalLoss
+
 
 class DataPrep:
     def __init__(self, base_dir, dataset_name):
@@ -109,7 +95,7 @@ def imbalance_under_sampling(dfname):
     print('label 1 is more',df.label.value_counts())
     return df
 
-def create_xlnet(model_name):
+def create_model(model_name):
     """ Creates the model. It is composed of the XLNet main block and then
     a classification head its added
     """
@@ -132,12 +118,6 @@ def create_xlnet(model_name):
 
     # Compile model
     model = tf.keras.Model(inputs=[word_ids,word_attention], outputs=[outputs])
-    model.compile(optimizer=tf.keras.optimizers.Adam(lr=2e-5), loss=BinaryFocalLoss(gamma=2), metrics=['accuracy', tf.keras.metrics.Precision(), tf.keras.metrics.Recall()])
-
-    return model
-
-    # Compile model
-    model = tf.keras.Model(inputs=[word_inputs], outputs=[outputs])
     model.compile(optimizer=tf.keras.optimizers.Adam(lr=2e-5), loss='binary_crossentropy', metrics=['accuracy', tf.keras.metrics.Precision(), tf.keras.metrics.Recall()])
 
     return model
@@ -149,50 +129,3 @@ def get_inputs(tweets, tokenizer, max_len=120):
     ids = np.array([a['attention_mask'] for a in inps])
     return inp_tok, ids
 
-def plot_metrics(pred, true_labels):
-    """Plots a ROC curve with the accuracy and the AUC"""
-    acc = accuracy_score(true_labels, np.array(pred.flatten() >= .5, dtype='int'))
-    fpr, tpr, thresholds = roc_curve(true_labels, pred)
-    auc = roc_auc_score(true_labels, pred)
-
-    fig, ax = plt.subplots(1, figsize=(8,8))
-    ax.plot(fpr, tpr, color='red')
-    ax.plot([0,1], [0,1], color='black', linestyle='--')
-    ax.set_title(f"AUC: {auc}\nACC: {acc}");
-    return fig
-
-def plot_confusion_matrix(cm,target_names,title='Confusion matrix',cmap=None,normalize=True):
-  accuracy = np.trace(cm) / float(np.sum(cm))
-  misclass = 1 - accuracy
-
-  if cmap is None:
-      cmap = plt.get_cmap('Blues')
-
-  plt.figure(figsize=(8, 6))
-  plt.imshow(cm, interpolation='nearest', cmap=cmap)
-  plt.title(title)
-  plt.colorbar()
-
-  if target_names is not None:
-      tick_marks = np.arange(len(target_names))
-      plt.xticks(tick_marks, target_names, rotation=45)
-      plt.yticks(tick_marks, target_names)
-
-  if normalize:
-      cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
-
-
-  thresh = cm.max() / 1.5 if normalize else cm.max() / 2
-  for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
-      if normalize:
-          plt.text(j, i, "{:0.4f}".format(cm[i, j]),
-                    horizontalalignment="center",
-                    color="white" if cm[i, j] > thresh else "black")
-      else:
-          plt.text(j, i, "{:,}".format(cm[i, j]),
-                    horizontalalignment="center",
-                    color="white" if cm[i, j] > thresh else "black")
-  plt.tight_layout()
-  plt.ylabel('True label')
-  plt.xlabel('Predicted label\naccuracy={:0.4f}; misclass={:0.4f}'.format(accuracy, misclass))
-  plt.show()
