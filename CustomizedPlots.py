@@ -3,10 +3,9 @@ import os,string
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score,confusion_matrix
 import matplotlib.pyplot as plt
 import itertools
-from sklearn.metrics import accuracy_score, roc_auc_score, roc_curve
+from sklearn.metrics import accuracy_score, roc_auc_score, roc_curve, confusion_matrix
 
 def plot_metrics(pred, true_labels):
     """Plots a ROC curve with the accuracy and the AUC"""
