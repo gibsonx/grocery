@@ -122,7 +122,7 @@ def create_model(model_name):
 
     return model
 
-def get_inputs(tweets, tokenizer, max_len=120):
+def get_tokenization(tweets, tokenizer, max_len=120):
     """ Gets tensors from text using the tokenizer provided"""
     inps = [tokenizer.encode_plus(t, max_length=max_len, pad_to_max_length=True, add_special_tokens=True) for t in tweets]
     inp_tok = np.array([a['input_ids'] for a in inps])

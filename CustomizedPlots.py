@@ -2,12 +2,11 @@ import re
 import os,string
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import itertools
 from sklearn.metrics import accuracy_score, roc_auc_score, roc_curve, confusion_matrix
 
-def plot_metrics(pred, true_labels):
+def auc_plot_metrics(pred, true_labels):
     """Plots a ROC curve with the accuracy and the AUC"""
     acc = accuracy_score(true_labels, np.array(pred.flatten() >= .5, dtype='int'))
     fpr, tpr, thresholds = roc_curve(true_labels, pred)
