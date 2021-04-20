@@ -87,12 +87,12 @@ def imbalance_under_sampling(dfname):
   if df_label_a.shape[0] > df_label_b.shape[0]:
     df_label_a = df_label_a.sample(df_label_b.shape[0],random_state=1)
     df = pd.concat([df_label_b, df_label_a], axis=0)
-    print('label 0 is more',df.label.value_counts())
+    print('Drop the number of samples to: ',df.label.value_counts())
     return df
   else:
     df_label_b = df_label_b.sample(df_label_a.shape[0],random_state=1)
     df = pd.concat([df_label_b, df_label_a], axis=0)
-    print('label 1 is more',df.label.value_counts())
+    print('Drop the number of samples to: ',df.label.value_counts())
     return df
 
 def create_model(model_name):
