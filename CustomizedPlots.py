@@ -106,59 +106,59 @@ def auc_plot_metrics(hate_pred_dl,hate_pred_xl,hate_true_labels,irony_pred_dl,ir
     ax[0].plot(fpr2, tpr2, color='blue',label='XLNet')
     ax[0].legend()
     ax[0].plot([0,1], [0,1], color='black', linestyle='--')
-    ax[0].set_title(f"Hate ROC Cruve & AUC");
+    ax[0].set_title(f"Hate ROC Cruve & AUC")
     ax[0].set_xlabel(f"DistilBert AUC: {auc_dl_hate}\n XLNet AUC: {auc_xl_hate}")
 
     ax[1].plot(fpr3, tpr3, color='red',label='DistilBert')
     ax[1].plot(fpr4, tpr4, color='blue',label='XLNet')
     ax[1].legend()
     ax[1].plot([0,1], [0,1], color='black', linestyle='--')
-    ax[1].set_title(f"Irony ROC Cruve & AUC");
+    ax[1].set_title(f"Irony ROC Cruve & AUC")
     ax[1].set_xlabel(f"DistilBert AUC: {auc_dl_irony}\n XLNet AUC: {auc_xl_irony}")
 
     ax[2].plot(fpr5, tpr5, color='red',label='DistilBert')
     ax[2].plot(fpr6, tpr6, color='blue',label='XLNet')
     ax[2].legend()
     ax[2].plot([0,1], [0,1], color='black', linestyle='--')
-    ax[2].set_title(f"Irony ROC Cruve & AUC");
+    ax[2].set_title(f"Irony ROC Cruve & AUC")
     ax[2].set_xlabel(f"DistilBert AUC: {auc_dl_offensive}\n XLNet AUC: {auc_xl_offensive}")
 
 def Proportion_chart(df_hate,hate,not_hate,df_irony,irony,not_irony,df_offensive,offensive,not_offensive):
-  fig, axs = plt.subplots(1,3)
-  fig.set_figheight(5)
-  fig.set_figwidth(18)
+    fig, axs = plt.subplots(1,3)
+    fig.set_figheight(5)
+    fig.set_figwidth(18)
 
-  nh_p = len(not_hate) / len(df_hate)
-  h_p = len(hate) / len(df_hate)
-  #Hate
-  h_sizes = [nh_p,h_p]
-  h_labels = 'not_hate', 'hate'
-  axs[0].axis('off')
-  axs[0].set_title("Hate Proportion")
-  axs[0].pie(h_sizes,autopct='%1.1f%%',startangle=90)
-  axs[0].axis('equal')
-  axs[0].legend(labels=h_labels)
+    nh_p = len(not_hate) / len(df_hate)
+    h_p = len(hate) / len(df_hate)
+    #Hate
+    h_sizes = [nh_p,h_p]
+    h_labels = 'not_hate', 'hate'
+    axs[0].axis('off')
+    axs[0].set_title("Hate Proportion")
+    axs[0].pie(h_sizes,autopct='%1.1f%%',startangle=90)
+    axs[0].axis('equal')
+    axs[0].legend(labels=h_labels)
 
-  #Irony
-  ni_p = len(not_irony) / len(df_irony)
-  i_p = len(irony) / len(df_irony)
-  i_sizes = [ni_p,i_p]
-  i_labels = 'irony', 'not_irony'
-  axs[1].axis('off')
-  axs[1].set_title("Irony Proportion")
-  axs[1].pie(i_sizes, autopct='%1.1f%%',startangle=90)
-  axs[1].axis('equal')
-  axs[1].legend(labels=i_labels)
+    #Irony
+    ni_p = len(not_irony) / len(df_irony)
+    i_p = len(irony) / len(df_irony)
+    i_sizes = [ni_p,i_p]
+    i_labels = 'irony', 'not_irony'
+    axs[1].axis('off')
+    axs[1].set_title("Irony Proportion")
+    axs[1].pie(i_sizes, autopct='%1.1f%%',startangle=90)
+    axs[1].axis('equal')
+    axs[1].legend(labels=i_labels)
 
-  #Offensive
-  no_p = len(not_offensive) / len(df_offensive)
-  o_p = len(offensive) / len(df_offensive)
-  h_sizes = [no_p,o_p]
-  h_labels = 'not_offensive', 'offensive'
-  axs[2].axis('off')
-  axs[2].set_title("Offensive Proportion")
-  axs[2].pie(h_sizes,autopct='%1.1f%%',startangle=90)
-  axs[2].axis('equal')
-  axs[2].legend(labels=h_labels)
+    #Offensive
+    no_p = len(not_offensive) / len(df_offensive)
+    o_p = len(offensive) / len(df_offensive)
+    h_sizes = [no_p,o_p]
+    h_labels = 'not_offensive', 'offensive'
+    axs[2].axis('off')
+    axs[2].set_title("Offensive Proportion")
+    axs[2].pie(h_sizes,autopct='%1.1f%%',startangle=90)
+    axs[2].axis('equal')
+    axs[2].legend(labels=h_labels)
 
-  plt.show()
+    plt.show()
